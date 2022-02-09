@@ -1,0 +1,30 @@
+#nmap commands to scan a specific domain
+#!/bin/bash
+echo "Enter domain name : "
+read dom
+echo "Domain name is: "$dom
+
+echo -e "\n Interface: "
+nmap --iflist
+
+echo -e "\n Mac spoofing:"
+nmap -V -ST -Pn --spoof-mac 0
+
+echo -e "\n Ping Scan with reasons: "
+nmap -sP $dom --reason
+
+echo -e "\n OS scan: "
+nmap -O $dom
+
+echo -e "\n Top 10 Common port: "
+nmap --top-ports 10 $dom
+
+
+echo -e "\n Open ports:: "
+nmap --open $dom
+
+echo -e "Info:"
+whois $dom | head -n 18 >> file.txt
+
+echo -e "\n nslookup: "
+nslookup $dom >> file.txt 
